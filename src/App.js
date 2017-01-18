@@ -14,14 +14,11 @@ class App extends React.Component {
     return (
       
       <div>
-        <input type="text"
-          onChange={this.update.bind(this)}
-        />  
+        <Widget update={this.update.bind(this)} /> 
         <h1>{this.state.text}</h1>
       </div>
     )
   }
-
 }
 
 App.propTypes = {
@@ -31,4 +28,9 @@ App.propTypes = {
 App.defaultProps = {
   text: "blah"
 }
+
+// StateLess function component
+const Widget = (props) => 
+  <input type="text" onChange={props.update} /> 
+
 export default App

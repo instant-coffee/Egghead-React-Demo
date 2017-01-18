@@ -2,35 +2,17 @@ import React from 'react';
 
 class App extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      text: 'This is state text'
-    }
-  }
-
-  update (e) {this.setState({text: e.target.value})}
-  render() {
-    return (
-      
-      <div>
-        <Widget update={this.update.bind(this)} /> 
-        <h1>{this.state.text}</h1>
-      </div>
-    )
+  render(){
+    return <Button>I<Heart/>React</Button>
   }
 }
 
-App.propTypes = {
-  text: React.PropTypes.string
-}
+const Button = (props) => <button>{props.children}</button>
 
-App.defaultProps = {
-  text: "blah"
-}
-
-// StateLess function component
-const Widget = (props) => 
-  <input type="text" onChange={props.update} /> 
+class Heart extends React.Component {
+  render(){
+    return <span>&hearts;</span>
+  }
+} 
 
 export default App

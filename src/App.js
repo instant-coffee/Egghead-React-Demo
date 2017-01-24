@@ -1,30 +1,45 @@
 import React from 'react';
+import Style from './style.css';
 
 class App extends React.Component {
   constructor(){
     super();
-    this.state = {items: []}
+    this.state = {
+      input: '/* add your jsx here */',
+      output: '',
+      err: ''
+    }
   }
 
-  componentWillMount() {
-    fetch('http://swapi.co/api/people/?format=json')
-      .then( res => res.json() )
-      .then( ({results: items}) => this.setState({items}))
+  update(e){
+    let code = e.target.value;
+    try {
+      this.setState({
+        output: window.Babel.transform(code, {presets: ['es2015', 'react']})
+        .code,
+        err: ''
+      })
+    }
+    catch(err){
+      this.setState({err: err.message})
+    }
   }
-
   render(){
-    let items = this.state.items
-    return (
+    return(
       <div>
-        {items.map(item => 
-          <Person key={item.name} person={item} />)}
+        <header>{this.state.err}</header>
+        <div className="container"></div>
+        <textarea
+          onChange={this.update.bind(this)}
+          defaultValue={this.state.input} />
+        <pre>
+          {this.state.output}
+        </pre>  
       </div>
     )
   }
 }
 
-const Person = (props) => <h4>{props.person.name}</h4>
-
-App.defaultProps = {val: 0}
+  
 
 export default App
